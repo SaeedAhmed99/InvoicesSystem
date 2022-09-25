@@ -7,6 +7,8 @@ use App\Http\Controllers\InvoicesDetialsController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\InvoiceAttachmentsController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,7 +51,10 @@ Route::group(['prefix' => 'invoices'], function(){
     Route::get('status/edit/{id}', [InvoiceController::class, 'statusEditShow'])->name('status.edit.show');
     Route::post('status/update/', [InvoiceController::class, 'statusUpdateShow'])->name('status.update.show');
     Route::get('print/{id}/', [InvoiceController::class, 'printInvoice'])->name('print.invoice');
-
+    Route::get('export/all', [InvoiceController::class, 'export'])->name('export');
+    Route::get('export/paid', [InvoiceController::class, 'exportPaid'])->name('export.paid');
+    Route::get('export/unpaid', [InvoiceController::class, 'exportUnPaid'])->name('export.unpaid');
+    Route::get('export/partial', [InvoiceController::class, 'InvoicePartialExport'])->name('export.partial');
 });
 
 
@@ -68,5 +73,16 @@ Route::group(['prefix' => 'products'], function(){
     Route::post('update', [ProductsController::class, 'update'])->name('product.update');
 });
 
+
+// Route::group(['middleware' => ['auth']], function() {
+//     Route::resource('roles', [RoleController::class]);
+//     Route::resource('users', [UserController::class])->name('users');
+//     });
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('roles','App\Http\Controllers\RoleController');
+    Route::resource('users','App\Http\Controllers\UserController');
+    Route::post('users/destroy', [UserController::class, 'destroy'])->name('destroy.user');
+    });
 
 Route::get('/{page}', [AdminController::class, 'index']);

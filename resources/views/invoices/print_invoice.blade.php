@@ -31,6 +31,7 @@
         <div class="col-md-12 col-xl-12">
             <div class=" main-content-body-invoice" id="print">
                 <div class="card card-invoice">
+
                     <div class="card-body">
                         <div class="invoice-header">
                             <h1 class="invoice-title">فاتورة تحصيل</h1>

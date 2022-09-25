@@ -63,9 +63,11 @@
                         <div class="col-xl-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <div class="d-flex justify-content-between">
+                                    <div class="">
                                         <a href="{{route('invoices.create')}}" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
                                         class="fas fa-plus"></i>&nbsp; اضافة فاتورة</a>
+                                        <a href="{{route('export')}}" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
+                                        class="fas fa-file"></i>&nbsp; تصدير اكسل</a>
                                     </div>
                                 </div>
                                 <div class="card-body">

@@ -62,6 +62,12 @@
 				<div class="row">
                         <div class="col-xl-12">
                             <div class="card">
+                                <div class="card-header pb-0">
+                                        <div class="">
+                                            <a href="{{route('export.paid')}}" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
+                                            class="fas fa-file"></i>&nbsp; تصدير اكسل</a>
+                                        </div>
+                                    </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table text-md-nowrap" id="example1" data-page-length='50' style="text-align: center">

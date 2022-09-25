@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\InvoiceEmail;
+use App\Exports\InvoiceExport;
+use App\Exports\InvoicePaidExport;
+use App\Exports\InvoiceUnPaidExport;
+use App\Exports\InvoicePartialExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
 {
@@ -33,12 +38,12 @@ class InvoiceController extends Controller
 
     public function invoicesUnPaid(){
         $invoices = Invoice::where('Value_Status', 2)->get();
-        return view('invoices.invoices_paid', compact('invoices'));
+        return view('invoices.invoices_unpaid', compact('invoices'));
     }
 
     public function invoicesPartial(){
         $invoices = Invoice::where('Value_Status', 3)->get();
-        return view('invoices.invoices_paid', compact('invoices'));
+        return view('invoices.invoices_partial', compact('invoices'));
     }
 
 
@@ -305,6 +310,26 @@ class InvoiceController extends Controller
     public function printInvoice($id){
         $invoices = Invoice::findOrFail($id);
         return view('invoices.print_invoice', compact('invoices'));
+    }
+
+    public function export() 
+    {
+        return Excel::download(new InvoiceExport, 'invoices.xlsx');
+    }
+
+    public function exportPaid() 
+    {
+        return Excel::download(new InvoicePaidExport, 'invoices_paid.xlsx');
+    }
+
+    public function exportUnPaid() 
+    {
+        return Excel::download(new InvoiceUnPaidExport, 'invoices_unpaid.xlsx');
+    }
+
+    public function InvoicePartialExport() 
+    {
+        return Excel::download(new InvoicePartialExport, 'invoices_partial.xlsx');
     }
 
 }
