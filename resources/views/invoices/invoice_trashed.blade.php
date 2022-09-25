@@ -100,10 +100,12 @@
                                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
                                                                     type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
                                                                 <div class="dropdown-menu tx-13">
+                                                                    @can('حذف الفاتورة')
                                                                     <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
                                                                         data-toggle="modal" data-target="#force_delete_invoice"><i
                                                                             class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف الفاتورة
                                                                     </a>
+                                                                    @endcan
                                                                     <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
                                                                         data-toggle="modal" data-target="#recovery_invoice"><i
                                                                             class="text-succes typcn typcn-arrow-back"></i>&nbsp;&nbsp;استعادة الفاتورة
