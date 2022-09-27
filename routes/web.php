@@ -9,6 +9,8 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\InvoiceAttachmentsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\CustomersReportController;
+use App\Http\Controllers\InvoicesReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,10 +76,14 @@ Route::group(['prefix' => 'products'], function(){
 });
 
 
-// Route::group(['middleware' => ['auth']], function() {
-//     Route::resource('roles', [RoleController::class]);
-//     Route::resource('users', [UserController::class])->name('users');
-//     });
+Route::group(['prefix' => 'reports'], function(){
+    Route::get('customers', [CustomersReportController::class, 'index'])->name('customers.reports');
+    Route::post('invoices/search_customers', [CustomersReportController::class, 'search_customers'])->name('customers.search.reports');
+    Route::get('invoices', [InvoicesReportController::class, 'index'])->name('invoices.reports');
+    Route::post('invoices/search_invoices', [InvoicesReportController::class, 'search_invoices'])->name('invoices.search.reports');
+});
+
+
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles','App\Http\Controllers\RoleController');

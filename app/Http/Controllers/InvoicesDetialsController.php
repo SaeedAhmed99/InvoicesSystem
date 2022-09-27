@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class InvoicesDetialsController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:حذف المرفق', ['only' => ['delete_attachment']]);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -8,6 +8,13 @@ use DB;
 use Hash;
 class UserController extends Controller
 {
+function __construct()
+{
+    $this->middleware('permission:المستخدمين', ['only' => ['index']]);
+    $this->middleware('permission:اضافة مستخدم', ['only' => ['create', 'store']]);
+    $this->middleware('permission:تعديل مستخدم', ['only' => ['edit', 'update']]);
+    $this->middleware('permission:حذف مستخدم', ['only' => ['destroy']]);
+}
 /**
 * Display a listing of the resource.
 *

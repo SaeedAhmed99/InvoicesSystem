@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:المنتجات', ['only' => ['index']]);
+        $this->middleware('permission:اضافة منتج', ['only' => ['store']]);
+        $this->middleware('permission:تعديل منتج', ['only' => ['update']]);
+        $this->middleware('permission:حذف منتح', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
