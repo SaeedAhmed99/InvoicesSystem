@@ -7,6 +7,7 @@ use App\Models\InvoicesDetials;
 use App\Models\InvoiceAttachments;
 use App\Models\Section;
 use App\Models\products;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +18,7 @@ use App\Exports\InvoicePaidExport;
 use App\Exports\InvoiceUnPaidExport;
 use App\Exports\InvoicePartialExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Notifications\AddInvoice;
 
 class InvoiceController extends Controller
 {
@@ -141,7 +143,22 @@ class InvoiceController extends Controller
             $request->pic->move(public_path('Attachments/invoiceAttachments'), $imageName);
         }
 
-        
+        $users = User::get();
+        $admin_users = [];
+        $i = 0;
+        foreach ($users as $user) {
+            if ($user->roles_name[0] == 'owner') {
+                $admin_users[$i] = $user;
+                $i++;
+            }
+        }
+        // return $admin_users;
+        // $user = User::where('roles_name', ["owner"])->all();
+        $invoices = $invoice;
+
+        // $user->notify(AddInvoice($invoices));
+        Notification::send($admin_users, new AddInvoice($invoices));
+
         session()->flash('Add', 'تم انشاء الفاتورة بنجاح');
         return redirect()->route('invoices');
 
@@ -346,4 +363,11 @@ class InvoiceController extends Controller
         return Excel::download(new InvoicePartialExport, 'invoices_partial.xlsx');
     }
 
+    public function markAsReadAll(Request $request) {
+        $userUnReadNotificaion = Auth::user()->unreadNotifications;
+        if($userUnReadNotificaion) {
+            $userUnReadNotificaion->markAsRead();
+            return redirect()->back();
+        }
+    }
 }

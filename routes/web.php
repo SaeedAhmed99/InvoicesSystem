@@ -57,6 +57,7 @@ Route::group(['prefix' => 'invoices'], function(){
     Route::get('export/paid', [InvoiceController::class, 'exportPaid'])->name('export.paid');
     Route::get('export/unpaid', [InvoiceController::class, 'exportUnPaid'])->name('export.unpaid');
     Route::get('export/partial', [InvoiceController::class, 'InvoicePartialExport'])->name('export.partial');
+    Route::get('markAsReadAll', [InvoiceController::class, 'markAsReadAll'])->name('markAsReadAll');
 });
 
 
